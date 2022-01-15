@@ -1,13 +1,12 @@
 var columnCounter = 0;
 var ulE1 = document.querySelector("#qa");
 var contentE1 = document.querySelector("#content");
-var timerE1 = document.getElementById('timer');
 var count = 0;
 
 
 
 //Create question
-createQ = function() {
+function createQ() {
     
     var listItemE1 = document.createElement("li");
     listItemE1.className = "list-item";
@@ -19,7 +18,7 @@ createQ = function() {
     ulE1.appendChild(listItemE1);
 }
 
-createA = function() {
+function createA() {
     let answers = pullA(columnCounter);
     new_obj = shuffleA(answers);
     console.log(answers);
@@ -35,7 +34,7 @@ createA = function() {
 }
 
 //When an item in the quiz ul is clicked
-quizClick = function(event) {
+function quizClick(event) {
     var targetE1 = event.target;
     
     //If target is an answer button or answer button text, checkanswer()
@@ -45,14 +44,14 @@ quizClick = function(event) {
     
     //If target is the start button, begin w/ start timer and new question
     } else if (targetE1.matches(".start-button") || targetE1.matches(".start-text")) {
-        console.log(timerE1);
+        timerBox();
         countdown();
         newQuestion();
     }
 }
 
 //Check answer; text from clicked response vs corresponding checkArray
-checkAnswer = function(text) {
+function checkAnswer(text) {
         console.log(columnCounter);
         //If the text matches array value, new question
         if (text === checkArray[columnCounter]) {
@@ -63,12 +62,10 @@ checkAnswer = function(text) {
             console.log("Subtract time");
             count = count - 5;
         }
-    
-    
 }
 
 //Start the quiz, called after start button is pressed
-newQuestion = function() {
+function newQuestion() {
     removeAll();
     //debugger;
     createQ();
@@ -76,7 +73,7 @@ newQuestion = function() {
 }
 
 //Remove all items within ul
-removeAll = function() {
+function removeAll() {
     
     //Get qa area by id
     let box = document.getElementById('qa');
@@ -91,7 +88,7 @@ removeAll = function() {
 
 }
 
-pullA = function(questionIndex) {
+function pullA(questionIndex) {
     let a1 = answerArray[questionIndex],
     a2 = answerArray2[questionIndex],
     a3 = answerArray3[questionIndex],
@@ -99,7 +96,7 @@ pullA = function(questionIndex) {
     return {a1, a2, a3, a4};
 }
 
-pullQ = function(localCounter) {
+function pullQ(localCounter) {
     if (columnCounter === 0) {
         shuffle(questionArray, answerArray, answerArray2, answerArray3, answerArray4, checkArray)
         }
@@ -107,7 +104,7 @@ pullQ = function(localCounter) {
     return retQ;
 }
 
-startButton = function() {
+function startButton() {
     var startButtonE1 = document.createElement("button");
     startButtonE1.className = "start-button";
     startButtonE1.setAttribute("id", "item");
@@ -115,18 +112,26 @@ startButton = function() {
     ulE1.appendChild(startButtonE1);
 }
 
+function timerBox() {
+    var timerB = document.createElement("section");
+    timerB.className = "timer";
+    timerB.setAttribute("id", "timer");
+    contentE1.appendChild(timerB);
+}
 function countdown() {
     count = count + 45;
-    var timer = timerE1;
-    console.log(count);
+    var timer = contentE1.querySelector("#timer");
+    console.log(timer);
     setInterval(function() {
         if (count > 1) {
-            timer.textContent = count + ' seconds remaining';
+            timer.innerHTML = "<p class='count-text'>" + count + "</p>"  + '<br>' + '<p>seconds remaining</p>';
             count--;
           } else if (count === 1) {
-            timer.textContent = count + ' second remaining';
+            timer.innerHTML = count + '<br></br>' + ' second remaining';
             count--;
           } else {
+            count = 0;
+            timer.innerHTML = "Time Up!";
             endGame();
           }  
     }, 1000);

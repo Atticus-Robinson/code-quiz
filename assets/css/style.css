@@ -46,7 +46,6 @@ footer {
     height: 70vh;
     width: 60vw;
     background-color: whitesmoke;
-    /*outline: var(--blue) solid 2px;*/
     align-items: center;
     border-radius: 25px;
 }
@@ -56,16 +55,17 @@ footer {
     max-height: 170px;
     height: 20vh;
     width: 20vw;
-    /*outline: var(--red) solid 5px;*/
     background-color: var(--cress);
-    padding: 2%;
-    white-space: nowrap;
-    align-items: center;
     border-radius: 25px;
+    color: grey;
+    font-size: 1.20em;
+    text-align: center;
+    line-height: 1em;
+    padding: 2% 0;
 }
 
-.quiz-area {
-    /*display: flex;*/
+.count-text {
+    font-size: 1.6em;
 }
 
 .qa-list {
@@ -115,3 +115,4 @@ footer {
     color: blueviolet;
     outline: 1px solid black;
 }
+
