@@ -74,10 +74,23 @@ footer {
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
-.list-item {
+.start-button {
+    width: 50%;
+    height: 50%;
+    background-color: blueviolet;
+    color: white;
+    align-content: center;
+    border-radius: 25px;
+    border-style: none;
+    outline: 2px solid black;
+    font-size: 2.5rem;
+}
+
+.list-item, .answer-button {
     width: 100%;
     height: 18%;
     background-color: blueviolet;
@@ -85,4 +98,20 @@ footer {
     align-content: center;
     padding: 10px;
     border-radius: 25px;
+}
+
+.question-text {
+    font-size: 18px;
+    text-align: center;
+}
+
+.answer-button {
+    transition-duration: 0.4s;
+    border-style: none;
+}
+
+.answer-button:hover {
+    background-color: white;
+    color: blueviolet;
+    outline: 1px solid black;
 }

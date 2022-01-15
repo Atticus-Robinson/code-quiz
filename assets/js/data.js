@@ -1,2 +1,6 @@
-var questionArray = ["0", "1", "2"]
-var answerArray = ["0", "1", "2"]
+var questionArray = [ "Question 1",      "Question 2",      "Question 3",        "Question 4"]
+var answerArray =   [ "1",               "correct",         "3",                 "4"]
+var answerArray2 =  [ "correct",         "b",               "c",                 "d"]
+var answerArray3 =  [ "q",               "w",               "correct",           "r"]
+var answerArray4 =  [ "!",               "@",               "#",                 "correct"]
+var checkArray =    [ "correct",         "correct",               "correct",                 "correct"]
