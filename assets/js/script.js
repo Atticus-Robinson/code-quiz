@@ -66,25 +66,26 @@ function checkAnswer(text) {
 
 //Start the quiz, called after start button is pressed
 function newQuestion() {
-    removeAll();
+    removeAll('qa');
     //debugger;
     createQ();
     createA();
 }
 
 //Remove all items within ul
-function removeAll() {
+function removeAll(element) {
     
-    //Get qa area by id
-    let box = document.getElementById('qa');
-    //Set slider equal to number of child elements (of ul)
-    let numItems = box.childElementCount;
+    let box = document.getElementById(element);
+    console.log(box);
     
-    //Remove number of element equal to number of ul child elements
+    if (element === "qa") {
+        let numItems = box.childElementCount;
     for (numItems; numItems > 0; numItems--) {
+        
         var remE1 = document.querySelector('#item');
         remE1.remove();
     }
+}
 
 }
 
@@ -181,6 +182,11 @@ function shuffleA(obj) {
     }
     console.log(new_obj);
     return new_obj;
+}
+
+function endGame() {
+    console.log("end game run");
+    removeAll(timer);
 }
 
 ulE1.addEventListener("click", quizClick);

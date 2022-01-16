@@ -16,6 +16,8 @@ body {
     color: #333333;
     font-family: 'Roboto', sans-serif;
     font-size: 100%;
+    font-weight: bold;
+    background-color: whitesmoke;
 }
 
 header {
@@ -45,27 +47,30 @@ footer {
 .quiz-area {
     height: 70vh;
     width: 60vw;
-    background-color: whitesmoke;
     align-items: center;
     border-radius: 25px;
 }
 
 .timer {
-    max-width: 170px;
-    max-height: 170px;
-    height: 20vh;
-    width: 20vw;
-    background-color: var(--cress);
+    width: 20%;
+    height: 15%;
+    background-color: lightblue;
     border-radius: 25px;
-    color: grey;
+    color: var(--blue);
     font-size: 1.20em;
+    display: flex;
     text-align: center;
-    line-height: 1em;
-    padding: 2% 0;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+    flex-direction: column;
+    line-height: .9em;
+    font-size: 3vh;
 }
 
 .count-text {
-    font-size: 1.6em;
+    font-size: 1.2em;
 }
 
 .qa-list {
@@ -81,23 +86,34 @@ footer {
 .start-button {
     width: 50%;
     height: 50%;
-    background-color: blueviolet;
-    color: white;
+    background-color: white;
+    color: var(--blue);
     align-content: center;
     border-radius: 25px;
     border-style: none;
-    outline: 2px solid black;
+    outline: 2px solid var(--blue);
     font-size: 2.5rem;
 }
 
 .list-item, .answer-button {
     width: 100%;
-    height: 18%;
-    background-color: blueviolet;
-    color: white;
+    height: 20%;
+    background-color: white;
+    color: var(--blue);
     align-content: center;
     padding: 10px;
-    border-radius: 25px;
+    border: 1px solid var(--blue);
+    font-size: 18px;
+}
+
+.list-item {
+    border-radius: 25px 25px 0 0;
+}
+
+.answer-button:last-child {
+    border-radius: 0 0 25px 25px;
+    background-color: white;
+
 }
 
 .question-text {
@@ -106,13 +122,56 @@ footer {
 }
 
 .answer-button {
-    transition-duration: 0.4s;
-    border-style: none;
+    transition-duration: 0.2s;
 }
 
 .answer-button:hover {
-    background-color: white;
-    color: blueviolet;
-    outline: 1px solid black;
+    background-color: grey;
+    color: white;
 }
 
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    header {
+        text-align: center;
+    }
+    .start-button {
+        height: 200px;
+        width: 200px;
+    }
+
+    main {
+        flex-direction: column;
+        gap: 5;
+
+    }
+
+    .quiz-area {
+        width: 90%;
+    }
+
+    footer {
+        text-align: center;
+    }
+
+    .timer {
+        right: 0;
+        top: 0;
+        width: 90%;
+        height: 10%;
+        font-size: 16px;
+        position: relative;
+    }
+
+    .count-text {
+        font-size: 18px;
+    }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {...}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {...}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {...}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {...}
