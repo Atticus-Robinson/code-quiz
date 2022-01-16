@@ -21,7 +21,6 @@ function createQ() {
 function createA() {
     let answers = pullA(columnCounter);
     new_obj = shuffleA(answers);
-    console.log(answers);
 
     for (x in new_obj) {
         var listItemE2 = document.createElement("button");
@@ -45,14 +44,16 @@ function quizClick(event) {
     //If target is the start button, begin w/ start timer and new question
     } else if (targetE1.matches(".start-button") || targetE1.matches(".start-text")) {
         timerBox();
-        countdown();
+        removeAll('start-button');
         newQuestion();
+    } else if (targetE1.matches(".final-score") || targetE1.matches(".final-score-text")) {
+        removeAll('final-score');
+        startButton();
     }
 }
 
 //Check answer; text from clicked response vs corresponding checkArray
 function checkAnswer(text) {
-        console.log(columnCounter);
         //If the text matches array value, new question
         if (text === checkArray[columnCounter]) {
             columnCounter++;
@@ -73,20 +74,21 @@ function newQuestion() {
 }
 
 //Remove all items within ul
-function removeAll(element) {
-    
+function removeAll(element) { 
+    //debugger;
     let box = document.getElementById(element);
     console.log(box);
-    
+    if (!box) return;
     if (element === "qa") {
         let numItems = box.childElementCount;
-    for (numItems; numItems > 0; numItems--) {
-        
-        var remE1 = document.querySelector('#item');
-        remE1.remove();
+        for (numItems; numItems > 0; numItems--) {
+            var remE1 = document.querySelector('#item');
+            remE1.remove();
+        }
     }
-}
-
+    else if (element) {
+        box.remove();
+    }
 }
 
 function pullA(questionIndex) {
@@ -108,7 +110,7 @@ function pullQ(localCounter) {
 function startButton() {
     var startButtonE1 = document.createElement("button");
     startButtonE1.className = "start-button";
-    startButtonE1.setAttribute("id", "item");
+    startButtonE1.setAttribute("id", "start-button");
     startButtonE1.innerHTML = "<p class='start-text' column-Counter=' '> Start </p>";
     ulE1.appendChild(startButtonE1);
 }
@@ -118,23 +120,29 @@ function timerBox() {
     timerB.className = "timer";
     timerB.setAttribute("id", "timer");
     contentE1.appendChild(timerB);
+    countdown();
 }
+
 function countdown() {
-    count = count + 45;
+    count = count + 50;
     var timer = contentE1.querySelector("#timer");
-    console.log(timer);
-    setInterval(function() {
-        if (count > 1) {
-            timer.innerHTML = "<p class='count-text'>" + count + "</p>"  + '<br>' + '<p>seconds remaining</p>';
+    timeInterval = setInterval(function() {
+        if (count > 6) {
+            timer.innerHTML = "<p class='count-text'>" + (count - 5) + "</p>"  + '<br>' + '<p>seconds remaining</p>';
             count--;
-          } else if (count === 1) {
-            timer.innerHTML = count + '<br></br>' + ' second remaining';
+          } else if (count === 6) {
+            timer.innerHTML = (count - 5) + '<br></br>' + ' second remaining';
             count--;
-          } else {
-            count = 0;
+          } else if (count < 6 && count > 0) {
             timer.innerHTML = "Time Up!";
+            count--;
+          } else if (count < 0) { 
+            count = 5;
+          } else if (count === 0) {
+            clearInterval(timeInterval);
             endGame();
-          }  
+          }
+          else return;
     }, 1000);
 }
 
@@ -153,40 +161,32 @@ function shuffle(array, array1, array2, array3, array4, arrayC) {
         [array4[currentIndex], array4[b]] = [array4[b],array4[currentIndex]];
         [arrayC[currentIndex], arrayC[b]] = [arrayC[b],arrayC[currentIndex]];
     }
-    console.log(array, array1, array2, array3, array4, arrayC);
     return array, array1, array2, array3, arrayC;
 }
 
-Array.prototype.shuffle = function(){
-    for (var i = 0; i < this.length; i++){
-        var a = this[i];
-        var b = Math.floor(Math.random() * this.length);
-        this[i] = this[b];
-        this[b] = a;
-    }
-}
-
-function getKeys(obj){
-    var arr = new Array();
-    for (var key in obj)
-        arr.push(key);
-    return arr;
-}
-function shuffleA(obj) {
-    var new_obj = {};
-    var keys = getKeys(obj);
-    keys.shuffle();
-    for (var key in keys){
-        if (key == "shuffle") continue; // skip our prototype method
-        new_obj[keys[key]] = obj[keys[key]];
-    }
-    console.log(new_obj);
-    return new_obj;
-}
-
 function endGame() {
+    //debugger;
+    count = 0;
     console.log("end game run");
-    removeAll(timer);
+    removeAll('timer');
+    removeAll('qa');
+    scoreDisplay();
+}
+
+function scoreDisplay() {
+    var scoreE1 = document.createElement("button");
+    scoreE1.className = "final-score";
+    scoreE1.setAttribute("id", "final-score");
+    scoreE1.innerHTML = "<p class='final-score-text'> Your Score: </p>";
+    ulE1.appendChild(scoreE1);
+}
+
+function scoreCount() {
+
+}
+
+function scoreStorage() {
+
 }
 
 ulE1.addEventListener("click", quizClick);

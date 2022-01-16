@@ -53,20 +53,19 @@ footer {
 
 .timer {
     width: 20%;
-    height: 15%;
+    height: 14vh;
     background-color: lightblue;
     border-radius: 25px;
     color: var(--blue);
     font-size: 1.20em;
     display: flex;
-    text-align: center;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    align-content: center;
     flex-direction: column;
     line-height: .9em;
     font-size: 3vh;
+    margin-bottom: 56vh;
+    text-align: center;
 }
 
 .count-text {
@@ -83,17 +82,23 @@ footer {
     align-items: center;
 }
 
-.start-button {
+.start-button, .final-score {
     width: 50%;
     height: 50%;
     background-color: var(--blue);
-    color: var(--blue);
-    align-content: center;
     border-radius: 25px;
     border-style: none;
     outline: 2px solid white;
     font-size: 2.5rem;
     color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.start-button:hover, .final-score:hover {
+    color: var(--blue);
+    background-color: white;
+    border:2px solid var(--blue);
 }
 
 .list-item, .answer-button {
@@ -133,6 +138,10 @@ footer {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+    
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 768px) {
     header {
         text-align: center;
     }
@@ -142,9 +151,7 @@ footer {
     }
 
     main {
-        flex-direction: column;
-        gap: 5;
-
+        flex-direction: column-reverse;
     }
 
     .quiz-area {
@@ -160,19 +167,27 @@ footer {
         top: 0;
         width: 90%;
         height: 10%;
-        font-size: 16px;
+        font-size: 28px;
         position: relative;
+        margin-bottom: 0;
+        line-height: .7em;
     }
 
     .count-text {
-        font-size: 18px;
+        font-size: 28px;
+    }
+    
+    .list-item, .answer-button, .question-text {
+        font-size: 28px;
     }
 }
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {...}
-/* Medium devices (landscape tablets, 768px and up) */
+/* Medium devices (landscape tablets, 768px and up) 
 @media only screen and (min-width: 768px) {...}
-/* Large devices (laptops/desktops, 992px and up) */
+Large devices (laptops/desktops, 992px and up) 
 @media only screen and (min-width: 992px) {...}
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {...}
+Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .timer {
+        height: 14vh;
+    }
+}
