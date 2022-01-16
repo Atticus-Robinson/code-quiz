@@ -1,118 +1,107 @@
 var columnCounter = 0;
-var ulE1 = document.querySelector("#qa");
 var contentE1 = document.querySelector("#content");
+var areaE1 = document.querySelector(".quiz-area");
 var count = 0;
 
 
-
 //Create question
-function createQ() {
-    
+function createQA() {
+    var ulE1 = document.createElement("ul");
+    ulE1.className = "qa-list";
+    ulE1.setAttribute("id", "qa");
+    areaE1.appendChild(ulE1);
+
+
     var listItemE1 = document.createElement("li");
     listItemE1.className = "list-item";
-    //Question text from pullQ() with column number input
-    listItemE1.innerHTML = "<p class='question-text'>" + pullQ(columnCounter) + "</p>";
+    listItemE1.textContent = pullQ(columnCounter);
     listItemE1.setAttribute("column-Counter", columnCounter);
-    listItemE1.setAttribute("id", "item");
-
+    listItemE1.setAttribute("qa", "q");
     ulE1.appendChild(listItemE1);
-}
 
-function createA() {
     let answers = pullA(columnCounter);
     new_obj = shuffleA(answers);
 
     for (x in new_obj) {
-        var listItemE2 = document.createElement("button");
-        listItemE2.className = "answer-button";
-        listItemE2.innerHTML = "<p class='answer-text' columnCounter=" + columnCounter + ">" + new_obj[x] + "</p>";
+        var listItemE2 = document.createElement("li");
+        listItemE2.className = "list-item";
+        listItemE2.textContent = new_obj[x];
         listItemE2.setAttribute("column-Counter", columnCounter);
-        listItemE2.setAttribute("id", "item");
+        listItemE2.setAttribute("qa", "a");
         ulE1.appendChild(listItemE2);
     }
+
 }
 
-//When an item in the quiz ul is clicked
-function quizClick(event) {
-    var targetE1 = event.target;
+quizarea.onclick = function(event) {
+    var className = event.target.className;
     
-    //If target is an answer button or answer button text, checkanswer()
-    if (targetE1.matches(".answer-button")|| targetE1.matches(".answer-text")) {
-        var text = event.target.textContent;
-        checkAnswer(text);
-    
-    //If target is the start button, begin w/ start timer and new question
-    } else if (targetE1.matches(".start-button") || targetE1.matches(".start-text")) {
+    if (className === "start-button" || className === "start-text") {
+        removeItems('start-button');
         timerBox();
-        removeAll('start-button');
-        newQuestion();
-    } else if (targetE1.matches(".final-score") || targetE1.matches(".final-score-text")) {
-        removeAll('final-score');
-        startButton();
+        createQA();
+    } else if (className === "list-item" ) {
+        var qa = event.target.getAttribute("qa");
+        if (qa === 'q') return;
+        var answerText = event.target.textContent;
+        checkAnswer(answerText);
+        return;
     }
 }
 
 //Check answer; text from clicked response vs corresponding checkArray
 function checkAnswer(text) {
-        //If the text matches array value, new question
-        if (text === checkArray[columnCounter]) {
-            columnCounter++;
-            newQuestion();
-        //Else penalize time
+    //If the text matches array value, new question
+    if (text === checkArray[columnCounter]) {
+        columnCounter++;
+        
+        if (columnCounter < questionArray.length) {
+            removeItems('qa');
+            createQA();
         } else {
-            console.log("Subtract time");
-            count = count - 5;
-        }
+            endGame();
+        };
+    //Else penalize time
+    } else {
+        console.log("Subtract time");
+        count = count - 5;
+    }
 }
 
-//Start the quiz, called after start button is pressed
-function newQuestion() {
-    removeAll('qa');
-    //debugger;
-    createQ();
-    createA();
-}
-
-//Remove all items within ul
-function removeAll(element) { 
-    //debugger;
-    let box = document.getElementById(element);
-    console.log(box);
-    if (!box) return;
-    if (element === "qa") {
-        let numItems = box.childElementCount;
-        for (numItems; numItems > 0; numItems--) {
-            var remE1 = document.querySelector('#item');
-            remE1.remove();
-        }
-    }
-    else if (element) {
-        box.remove();
-    }
+function removeItems(idName) {
+    var rem = document.getElementById(idName);
+    rem.remove();
+    return;
 }
 
 function pullA(questionIndex) {
     let a1 = answerArray[questionIndex],
-    a2 = answerArray2[questionIndex],
-    a3 = answerArray3[questionIndex],
-    a4 = answerArray4[questionIndex];
-    return {a1, a2, a3, a4};
+        a2 = answerArray2[questionIndex],
+        a3 = answerArray3[questionIndex],
+        a4 = answerArray4[questionIndex];
+    return {
+        a1,
+        a2,
+        a3,
+        a4
+    };
 }
 
 function pullQ(localCounter) {
     if (columnCounter === 0) {
         shuffle(questionArray, answerArray, answerArray2, answerArray3, answerArray4, checkArray)
-        }
-    retQ = questionArray[localCounter];    
+    }
+    retQ = questionArray[localCounter];
     return retQ;
 }
 
 function startButton() {
+    columnCounter = 0;
     var startButtonE1 = document.createElement("button");
     startButtonE1.className = "start-button";
     startButtonE1.setAttribute("id", "start-button");
-    startButtonE1.innerHTML = "<p class='start-text' column-Counter=' '> Start </p>";
-    ulE1.appendChild(startButtonE1);
+    startButtonE1.innerHTML = "<p class='start-text' id='start-text' column-Counter=' '> Start </p>";
+    areaE1.appendChild(startButtonE1);
 }
 
 function timerBox() {
@@ -126,68 +115,69 @@ function timerBox() {
 function countdown() {
     count = count + 50;
     var timer = contentE1.querySelector("#timer");
-    timeInterval = setInterval(function() {
+    timeInterval = setInterval(function () {
         if (count > 6) {
-            timer.innerHTML = "<p class='count-text'>" + (count - 5) + "</p>"  + '<br>' + '<p>seconds remaining</p>';
+            timer.innerHTML = "<p class='count-text'>" + (count - 5) + "</p>" + '<br>' + '<p>seconds remaining</p>';
             count--;
-          } else if (count === 6) {
+        } else if (count === 6) {
             timer.innerHTML = (count - 5) + '<br></br>' + ' second remaining';
             count--;
-          } else if (count < 6 && count > 0) {
+        } else if (count < 6 && count > 0) {
             timer.innerHTML = "Time Up!";
             count--;
-          } else if (count < 0) { 
+        } else if (count < 0) {
             count = 5;
-          } else if (count === 0) {
+        } else if (count === 0) {
             clearInterval(timeInterval);
             endGame();
-          }
-          else return;
+        } else return;
     }, 1000);
-}
-
-
-function shuffle(array, array1, array2, array3, array4, arrayC) {
-    let currentIndex = array.length, b;
-
-    while (currentIndex != 0) {
-        b = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [array[currentIndex], array[b]] = [array[b],array[currentIndex]];
-        [array1[currentIndex], array1[b]] = [array1[b],array1[currentIndex]];
-        [array2[currentIndex], array2[b]] = [array2[b],array2[currentIndex]];
-        [array3[currentIndex], array3[b]] = [array3[b],array3[currentIndex]];
-        [array4[currentIndex], array4[b]] = [array4[b],array4[currentIndex]];
-        [arrayC[currentIndex], arrayC[b]] = [arrayC[b],arrayC[currentIndex]];
-    }
-    return array, array1, array2, array3, arrayC;
 }
 
 function endGame() {
     //debugger;
-    count = 0;
-    console.log("end game run");
-    removeAll('timer');
-    removeAll('qa');
+    count = "";
+    removeItems("qa");
+    removeItems("timer");
     scoreDisplay();
+    nameEntry();
 }
 
 function scoreDisplay() {
-    var scoreE1 = document.createElement("button");
+    var scoreE1 = document.createElement("section");
     scoreE1.className = "final-score";
     scoreE1.setAttribute("id", "final-score");
-    scoreE1.innerHTML = "<p class='final-score-text'> Your Score: </p>";
-    ulE1.appendChild(scoreE1);
+    scoreE1.textContent = "Your Score: \r\n" + columnCounter;
+    areaE1.appendChild(scoreE1);
 }
 
-function scoreCount() {
+function nameEntry() {
+    var nameE1 = document.createElement("section");
+    nameE1.className = "name-entry";
+    nameE1.setAttribute("id", "name-entry");
+    nameE1.innerHTML = "<input class='entry-field' id='entryfield' type='text' autocomplete='off' placeholder='Enter your initials'></input>";
+    areaE1.appendChild(nameE1);
+    var input = document.getElementById("entryfield");
 
+    input.addEventListener("keyup", function(event) {
+        if (event.key === 'Enter') {
+            storeScore();
+            removeItems("name-entry");
+            removeItems("final-score");
+            startButton();
+        }
+    });
 }
 
-function scoreStorage() {
+ function storeScore() {
+    i = 0;
+    storageTest = localStorage.getItem("score" + i);
+    while (storageTest) {
+        i++;
+        storageTest = localStorage.getItem("score" + i);
+    }
+    var nameE2 = document.getElementById('entryfield').value;
+    localStorage.setItem("score" + i, nameE2 + " " + columnCounter);
+ }
 
-}
-
-ulE1.addEventListener("click", quizClick);
 startButton();

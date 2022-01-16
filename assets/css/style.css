@@ -12,43 +12,58 @@
     --cress: #EAE287;
 }
 
+html,body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
 body {
     color: #333333;
     font-family: 'Roboto', sans-serif;
     font-size: 100%;
     font-weight: bold;
     background-color: whitesmoke;
+    height: 100vh;
 }
 
 header {
     background-color: var(--blue);
     color: white;
-    height: 10vh;
+    height: 10%;
     line-height: 10vh;
     padding-left: 2vw;
 }
 
 main {
-    height: 87vh;
+    height: 87%;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
+    width: 100%;
 }
 
 footer {
     background-color: var(--blue);
     color: white;
-    height: 3vh;
+    height: 3%;
     font-size: 0.875em;
     line-height: 3vh;
 }
 
 .quiz-area {
-    height: 70vh;
-    width: 60vw;
+    height: 70%;
+    width: 60%;
     align-items: center;
     border-radius: 25px;
+    outline: 1px solid var(--red);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .timer {
@@ -82,7 +97,7 @@ footer {
     align-items: center;
 }
 
-.start-button, .final-score {
+.start-button {
     width: 50%;
     height: 50%;
     background-color: var(--blue);
@@ -95,59 +110,108 @@ footer {
     transition-duration: 0.4s;
 }
 
-.start-button:hover, .final-score:hover {
+.start-button:hover {
     color: var(--blue);
     background-color: white;
-    border:2px solid var(--blue);
+    border: 2px solid var(--blue);
 }
 
-.list-item, .answer-button {
+.list-item {
     width: 100%;
     height: 20%;
     background-color: white;
     color: var(--blue);
-    align-content: center;
     padding: 10px;
     border: 1px solid var(--blue);
+    border-bottom: 0;
     font-size: 18px;
-}
-
-.list-item {
-    border-radius: 25px 25px 0 0;
-}
-
-.answer-button:last-child {
-    border-radius: 0 0 25px 25px;
-    background-color: white;
-
-}
-
-.question-text {
-    font-size: 18px;
+    transition-duration: 0.3s;
     text-align: center;
 }
 
-.answer-button {
-    transition-duration: 0.2s;
+.list-item:first-child {
+    border-radius: 25px 25px 0 0;
 }
 
-.answer-button:hover {
+.list-item:last-child {
+    border-radius: 0 0 25px 25px;
+    border-bottom: 1px solid var(--blue);
+}
+
+.list-item:hover {
     background-color: grey;
     color: white;
+    cursor: pointer;
+}
+
+.list-item:first-child:hover {
+    background-color: white;
+    color: var(--blue);
+    cursor: auto;
+}
+
+.final-score {
+    width: 50%;
+    height: 30%;
+    background-color: var(--blue);
+    border-radius: 25px;
+    font-size: 2.5rem;
+    color: white;
+    display: flex;
+    white-space: pre-wrap;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.name-entry {
+    width: 30%;
+    height: 30%;
+    background-color: var(--orange);
+    border-radius: 25px;
+    font-size: 2.5rem;
+    color: white;
+    position: relative;
+}
+
+.entry-field {
+    width: 80%;
+    height: 25%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border-radius: 25px;
+}
+
+.entry-field::placeholder {
+    text-align: center;
+}
+
+.entry-field:focus {
+    border: 2px solid grey;
 }
 
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-    
-}
+@media only screen and (max-width: 600px) {}
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 768px) {
     header {
         text-align: center;
     }
-    .start-button {
+
+    .start-button,
+    .final-score {
+        height: 300px;
+        width: 300px;
+    }
+    
+    .name-entry {
+        width: 300px;
         height: 200px;
-        width: 200px;
     }
 
     main {
@@ -176,14 +240,21 @@ footer {
     .count-text {
         font-size: 28px;
     }
-    
-    .list-item, .answer-button, .question-text {
+
+    .list-item,
+    .question-text {
         font-size: 28px;
     }
 }
-/* Medium devices (landscape tablets, 768px and up) 
-@media only screen and (min-width: 768px) {...}
-Large devices (laptops/desktops, 992px and up) 
+
+/*Medium devices (landscape tablets, 768px and up)*/ 
+@media only screen and (min-width: 768px) {
+    .final-score {
+        font-size: 2.0em;
+    }
+}
+
+/*Large devices (laptops/desktops, 992px and up) 
 @media only screen and (min-width: 992px) {...}
 Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {

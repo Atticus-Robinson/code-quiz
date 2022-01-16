@@ -14,6 +14,24 @@ Array.prototype.shuffle = function(){
     }
 }
 
+function shuffle(array, array1, array2, array3, array4, arrayC) {
+    let currentIndex = array.length,
+        b;
+
+    while (currentIndex != 0) {
+        b = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [array[currentIndex], array[b]] = [array[b], array[currentIndex]];
+        [array1[currentIndex], array1[b]] = [array1[b], array1[currentIndex]];
+        [array2[currentIndex], array2[b]] = [array2[b], array2[currentIndex]];
+        [array3[currentIndex], array3[b]] = [array3[b], array3[currentIndex]];
+        [array4[currentIndex], array4[b]] = [array4[b], array4[currentIndex]];
+        [arrayC[currentIndex], arrayC[b]] = [arrayC[b], arrayC[currentIndex]];
+    }
+    return array, array1, array2, array3, arrayC;
+}
+
 function getKeys(obj){
     var arr = new Array();
     for (var key in obj)
