@@ -59,7 +59,6 @@ footer {
     width: 60%;
     align-items: center;
     border-radius: 25px;
-    outline: 1px solid var(--red);
     display: flex;
     justify-content: center;
     flex-direction: column;
