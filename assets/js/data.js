@@ -1,9 +1,9 @@
-var questionArray = [ "Question 1",      "Question 2",      "Question 3",        "Question 4"]
-var answerArray =   [ "1",               "correct",         "3",                 "4"]
-var answerArray2 =  [ "correct",         "b",               "c",                 "d"]
-var answerArray3 =  [ "q",               "w",               "correct",           "r"]
-var answerArray4 =  [ "!",               "@",               "#",                 "correct"]
-var checkArray =    [ "correct",         "correct",               "correct",                 "correct"]
+var questionArray = [ "Inside what HTML element do we put the JavaScript",      "What are the two parameters for localStorage.setItem()",      "What property sets an element's class name?",        "What is it called when an event runs all the way up to an element's ancestors"]
+var answerArray =   [ "<script>",               "value, key",         "setClass",                 "stacking"]
+var answerArray2 =  [ "<javascript>",         "key, value",               "setClassName",                 "handling"]
+var answerArray3 =  [ "<js>",               "value, value",               "setElementClass",           "bubbling"]
+var answerArray4 =  [ "<scripting>",               "key, key",               "className",                 "nesting"]
+var checkArray =    [ "<script>",         "key, value",               "className",                 "bubbling"]
 
 Array.prototype.shuffle = function(){
     for (var i = 0; i < this.length; i++){
