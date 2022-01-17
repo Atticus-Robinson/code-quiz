@@ -7,7 +7,7 @@ var score;
 
 //Create question and answer in quiz area 
 function createQA() {
-    
+
     //Create ul element and append
     var ulE1 = document.createElement("ul");
     ulE1.className = "qa-list";
@@ -39,9 +39,9 @@ function createQA() {
 }
 
 //Upon clicking an element in the quiz area
-quizarea.onclick = function(event) {
+quizarea.onclick = function (event) {
     var className = event.target.className;
-    
+
     //Check target div
     if (className === "start-button" || className === "start-text") {
         //If target was start button, remove start button or scorelist, create timer, and start questions
@@ -49,13 +49,15 @@ quizarea.onclick = function(event) {
         removeItems("scorelist");
         timerBox();
         createQA();
-    } else if (className === "list-item" ) {
+    } else if (className === "list-item") {
         //If target was a qa list item, get text content, check against answer array with checkAnswer()
         var qa = event.target.getAttribute("qa");
         if (qa === 'q') return;
         var answerText = event.target.textContent;
         checkAnswer(answerText);
         return;
+    } else if (className === "score-item") {
+        scoreChange("clear");
     }
 }
 
@@ -64,14 +66,14 @@ function checkAnswer(text) {
     //If the text matches array value, move column counter. If there are more questions in the array generate next question. If not end game
     if (text === checkArray[columnCounter]) {
         columnCounter++;
-        
+
         if (columnCounter < questionArray.length) {
             removeItems('qa');
             createQA();
         } else {
             endGame();
         };
-    //Else penalize time
+        //Else penalize time
     } else {
         console.log("Subtract time");
         count = count - 5;
@@ -81,8 +83,8 @@ function checkAnswer(text) {
 //Taking an idName, get the idName, and remove element
 function removeItems(idName) {
     var rem = document.getElementById(idName);
-    if (rem){
-    rem.remove();
+    if (rem) {
+        rem.remove();
     }
     return;
 }
@@ -135,7 +137,7 @@ function countdown() {
     //Set counter to 50 (45 with 5 second "Time Up" message)
     count = count + 50;
     var timer = contentE1.querySelector("#timer");
-    
+
     timeInterval = setInterval(function () {
         if (count > 6) {
             timer.innerHTML = "<p class='count-text'>" + (count - 5) + "</p>" + '<br>' + '<p>seconds remaining</p>';
@@ -189,33 +191,43 @@ function nameEntry() {
     areaE1.appendChild(nameE1);
     var input = document.getElementById("entryfield");
 
-    input.addEventListener("keyup", function(event) {
+    input.addEventListener("keyup", function (event) {
         if (event.key === 'Enter') {
             //After enter key press, store the entered score, display localStorage score list, generate start button
-            storeScore();
+            scoreChange("store");
             checkScores();
             startButton();
         }
     });
 }
 
-//Create score name based on already stored score items, store into local storage
- function storeScore() {
+//Take either store or clear as input. On clear, clear all local storage scores. On store, store text field into local storage.
+function scoreChange(doThis) {
+    //debugger;
     i = 0;
-    storageTest = localStorage.getItem("score" + i);
-    while (storageTest) {
+    storageItem = localStorage.getItem("score" + i);
+    while (storageItem) {
+        if (doThis === "clear") {
+            localStorage.removeItem("score" + i);
+        }
         i++;
-        storageTest = localStorage.getItem("score" + i);
+        storageItem = localStorage.getItem("score" + i);
     }
-    var nameE2 = document.getElementById('entryfield').value;
-    localStorage.setItem("score" + i, nameE2 + " " + score);
- }
+    if (doThis === "store") {
+        var nameE2 = document.getElementById('entryfield').value;
+        localStorage.setItem("score" + i, nameE2 + " " + score);
+    } else if (doThis === "clear") {
+        removeItems('start-button');
+        removeItems("scorelist");
+        startButton();
+    }
+}
 
- //Create score ul, create title li, check scores stored in localStorage, generate li item for each score 
+//Create score ul, create title li, check scores stored in localStorage, generate li item for each score 
 function checkScores() {
     removeItems("final-score");
     removeItems("name-entry");
-    
+
     let ulE2 = document.createElement("ul");
     ulE2.className = "score-list";
     ulE2.setAttribute("id", "scorelist");
@@ -227,18 +239,22 @@ function checkScores() {
     liE1.textContent = "Scores";
     ulE2.appendChild(liE1);
     i = 0;
-    storageTest = localStorage.getItem("score" + i);
-    while (storageTest) {
+    storageItem = localStorage.getItem("score" + i);
+    while (storageItem) {
         let key = localStorage.getItem("score" + i);
         let scoreE2 = document.createElement("li");
         scoreE2.className = "score-item";
         scoreE2.textContent = key;
         ulE2.appendChild(scoreE2);
-        
-        i++;
-        storageTest = localStorage.getItem("score" + i);
-    } return;
-}
 
+        i++;
+        storageItem = localStorage.getItem("score" + i);
+    }
+    let clearScores = document.createElement("li");
+    clearScores.className = "score-item";
+    clearScores.textContent = "Click Here to Clear Scores";
+    ulE2.appendChild(clearScores);
+    return;
+}
 //Call function to generate start button
 startButton();
