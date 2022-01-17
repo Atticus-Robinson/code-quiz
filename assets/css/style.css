@@ -6,9 +6,7 @@
 
 :root {
     --blue: #003040;
-    --red: #D82828;
     --orange: #F77F0D;
-    --yellow: #FCBF49;
     --cress: #EAE287;
 }
 
@@ -58,7 +56,6 @@ footer {
     height: 70%;
     width: 60%;
     align-items: center;
-    border-radius: 25px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -74,7 +71,6 @@ footer {
     font-size: 1.20em;
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     line-height: .9em;
     font-size: 3vh;
@@ -128,6 +124,34 @@ footer {
     text-align: center;
 }
 
+.score-list {
+    width: 100%;
+    height: 100%;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-shrink: 0;
+}
+
+.score-list-title {
+    height: 15%;
+    width: 100%;
+    border: 1px solid var(--blue);
+    text-align: center;
+    background-color: var(--cress);
+    padding: 10px;
+}
+
+.score-item {
+    width: 100%;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    border-top: none;
+    text-align: center;
+    padding: 5px;
+}
+
 .list-item:first-child {
     border-radius: 25px 25px 0 0;
 }
@@ -168,8 +192,6 @@ footer {
     height: 30%;
     background-color: var(--orange);
     border-radius: 25px;
-    font-size: 2.5rem;
-    color: white;
     position: relative;
 }
 

@@ -28,7 +28,8 @@ I struggled a lot with DOM at the beggining of this challenge, and even still. M
             - nameEntry();
                 - keyup event
                     - storeScore();
-                    - removeItems();
+                    - checkScores();
+                        - removeItems();
                     - startButton();
 
 ## Deplyed Page

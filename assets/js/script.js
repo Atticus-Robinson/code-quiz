@@ -2,6 +2,7 @@ var columnCounter = 0;
 var contentE1 = document.querySelector("#content");
 var areaE1 = document.querySelector(".quiz-area");
 var count = 0;
+var score;
 
 
 //Create question
@@ -38,6 +39,7 @@ quizarea.onclick = function(event) {
     
     if (className === "start-button" || className === "start-text") {
         removeItems('start-button');
+        removeItems("scorelist");
         timerBox();
         createQA();
     } else if (className === "list-item" ) {
@@ -70,7 +72,9 @@ function checkAnswer(text) {
 
 function removeItems(idName) {
     var rem = document.getElementById(idName);
+    if (rem){
     rem.remove();
+    }
     return;
 }
 
@@ -130,13 +134,15 @@ function countdown() {
         } else if (count === 0) {
             clearInterval(timeInterval);
             endGame();
-        } else return;
+        } else {
+            clearInterval(timeInterval);
+            return;
+        }
     }, 1000);
 }
 
 function endGame() {
     //debugger;
-    count = "";
     removeItems("qa");
     removeItems("timer");
     scoreDisplay();
@@ -147,7 +153,8 @@ function scoreDisplay() {
     var scoreE1 = document.createElement("section");
     scoreE1.className = "final-score";
     scoreE1.setAttribute("id", "final-score");
-    scoreE1.textContent = "Your Score: \r\n" + columnCounter;
+    score = columnCounter + count;
+    scoreE1.textContent = "Your Score: \r\n" + score;
     areaE1.appendChild(scoreE1);
 }
 
@@ -162,8 +169,8 @@ function nameEntry() {
     input.addEventListener("keyup", function(event) {
         if (event.key === 'Enter') {
             storeScore();
-            removeItems("name-entry");
-            removeItems("final-score");
+            checkScores();
+            count = "";
             startButton();
         }
     });
@@ -177,7 +184,36 @@ function nameEntry() {
         storageTest = localStorage.getItem("score" + i);
     }
     var nameE2 = document.getElementById('entryfield').value;
-    localStorage.setItem("score" + i, nameE2 + " " + columnCounter);
+    localStorage.setItem("score" + i, nameE2 + " " + score);
  }
+
+function checkScores() {
+    removeItems("final-score");
+    removeItems("name-entry");
+    
+    let ulE2 = document.createElement("ul");
+    ulE2.className = "score-list";
+    ulE2.setAttribute("id", "scorelist");
+    areaE1.appendChild(ulE2);
+
+    let liE1 = document.createElement("li");
+    liE1.className = "score-list-title";
+    liE1.setAttribute("id", "score-list-title");
+    liE1.textContent = "Scores";
+    ulE2.appendChild(liE1);
+    i = 0;
+    storageTest = localStorage.getItem("score" + i);
+    while (storageTest) {
+        let key = localStorage.getItem("score" + i);
+        let scoreE2 = document.createElement("li");
+        scoreE2.className = "score-item";
+        scoreE2.textContent = key;
+        ulE2.appendChild(scoreE2);
+        
+        i++;
+        storageTest = localStorage.getItem("score" + i);
+    } return;
+}
+
 
 startButton();
