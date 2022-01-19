@@ -34,7 +34,7 @@ I struggled a lot with DOM at the beggining of this challenge, and even still. M
 
 ## Deplyed Page
 
-https://atticus-robinson.github.io/PassGem/
+https://atticus-robinson.github.io/code-quiz/
 
 ## Page Images
 
