@@ -38,6 +38,6 @@ https://atticus-robinson.github.io/code-quiz/
 
 ## Page Images
 
-![Start](./Assets/images/start.png)
-![Question](./Assets/images/question.png)
-![End](./Assets/images/end.png)
+![Start](./assets/images/start.png)
+![Question](./assets/images/question.png)
+![End](./assets/images/end.png)
